@@ -119,6 +119,8 @@ void Args::parseArgs(int argc, char** argv) {
       initModel = string(argv[i + 1]);
     } else if (strcmp(argv[i], "-fileFormat") == 0) {
       fileFormat = string(argv[i + 1]);
+    } else if (strcmp(argv[i], "-labelDocFile") == 0) {
+      labelDocFile = string(argv[i + 1]);
     } else if (strcmp(argv[i], "-label") == 0) {
       label = string(argv[i + 1]);
     } else if (strcmp(argv[i], "-loss") == 0) {
@@ -317,6 +319,7 @@ void Args::printArgs() {
        << "adagrad: " << adagrad << endl
        << "trainMode: " << trainMode << endl
        << "fileFormat: " << fileFormat << endl
+       << "labelDocFile: " << labelDocFile << endl
        << "normalizeText: " << normalizeText << endl
        << "dropoutLHS: " << dropoutLHS << endl
        << "dropoutRHS: " << dropoutRHS << endl;

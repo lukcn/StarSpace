@@ -27,7 +27,8 @@ class LayerDataParser : public DataParser {
 public:
   LayerDataParser(
     std::shared_ptr<Dictionary> dict,
-    std::shared_ptr<Args> args);
+    std::shared_ptr<Args> args,
+    bool checkEnabled = true);
 
   bool parse(
       std::string& line,
@@ -38,6 +39,8 @@ public:
       std::string& line,
       ParseResults& rslt,
       const std::string& sep="\t") override;
+
+  bool checkImpl(const ParseResults& rslt) override;
 
 };
 

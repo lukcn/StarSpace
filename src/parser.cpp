@@ -30,9 +30,11 @@ void chomp(std::string& line, char toChomp = '\n') {
 
 DataParser::DataParser(
     shared_ptr<Dictionary> dict,
-    shared_ptr<Args> args) {
+    shared_ptr<Args> args,
+    bool checkEnabled) {
   dict_ = dict;
   args_ = args;
+  checkEnabled_ = checkEnabled;
 }
 
 bool DataParser::parse(
@@ -73,7 +75,14 @@ void DataParser::parseForDict(
 }
 
 // check wether it is a valid example
-bool DataParser::check(const ParseResults& example) {
+bool DataParser::check(const ParseResults &rslt) {
+  if (checkEnabled_) {
+    return checkImpl(rslt);
+  }
+  return true;
+}
+
+bool DataParser::checkImpl(const ParseResults& example) {
   if (args_->trainMode == 0) {
     // require lhs and rhs
     return !example.RHSTokens.empty() && !example.LHSTokens.empty();

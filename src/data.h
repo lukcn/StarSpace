@@ -55,6 +55,7 @@ public:
 
   void initWordNegatives();
   void getRandomWord(std::vector<Base>& result);
+  ParseResults& getParseResults(int32_t idx);
 
 
 protected:

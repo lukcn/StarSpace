@@ -13,7 +13,7 @@ CXXFLAGS = -pthread -std=gnu++11
 BOOST_DIR = /usr/local/bin/boost_1_63_0/
 GTEST_DIR = /usr/local/bin/googletest
 
-OBJS = normalize.o dict.o args.o proj.o parser.o data.o model.o starspace.o doc_parser.o doc_data.o utils.o
+OBJS = normalize.o dict.o args.o proj.o parser.o data.o model.o starspace.o doc_parser.o db_doc_parser.o doc_data.o utils.o
 TESTS = matrix_test proj_test
 INCLUDES = -I$(BOOST_DIR)
 
@@ -94,6 +94,9 @@ parser.o: dict.o src/parser.cpp src/parser.h
 
 doc_parser.o: dict.o src/doc_parser.cpp src/doc_parser.h
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c src/doc_parser.cpp -o doc_parser.o
+
+db_doc_parser.o: doc_parser.o dict.o src/db_doc_parser.cpp src/db_doc_parser.h
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c src/db_doc_parser.cpp -o db_doc_parser.o
 
 starspace.o: src/starspace.cpp src/starspace.h
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c src/starspace.cpp

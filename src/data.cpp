@@ -223,6 +223,10 @@ void InternDataHandler::getRandomWord(vector<Base>& result) {
   }
 }
 
+ParseResults& InternDataHandler::getParseResults(int32_t idx) {
+  return examples_[idx];
+}
+
 void InternDataHandler::initWordNegatives() {
   word_iter_ = 0;
   word_negatives_.clear();

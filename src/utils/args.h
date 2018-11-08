@@ -24,6 +24,7 @@ class Args {
     std::string model;
     std::string initModel;
     std::string fileFormat;
+    std::string labelDocFile;
     std::string label;
     std::string basedoc;
     std::string loss;

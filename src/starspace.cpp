@@ -9,6 +9,7 @@
 
 
 #include "starspace.h"
+#include "db_doc_parser.h"
 #include <iostream>
 #include <queue>
 #include <unordered_set>
@@ -77,8 +78,18 @@ void StarSpace::init() {
   // build dict
   initParser();
   dict_ = make_shared<Dictionary>(args_);
-  auto filename = args_->trainFile;
-  dict_->readFromFile(filename, parser_);
+  if (!args_->labelDocFile.empty()) {
+    dict_->readFromFile(args_->labelDocFile, parser_);
+    shared_ptr<LayerDataHandler> labelDocFileData;
+    cout << "Loading labelDocFile:" << endl << "  ";
+    // TODO: exit with error if trainMode == 0
+    labelDocFileData = make_shared<LayerDataHandler>(args_);
+    labelDocFileData->loadFromFile(args_->labelDocFile, make_shared<LayerDataParser>(dict_, args_, false));
+    parser_ = make_shared<DBLayerDataParser>(labelDocFileData, dict_, args_);
+  } else {
+    dict_->readFromFile(args_->trainFile, parser_);
+  }
+
   parser_->resetDict(dict_);
   if (args_->debug) {dict_->save(cout);}
 

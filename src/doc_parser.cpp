@@ -21,8 +21,10 @@ namespace starspace {
 
 LayerDataParser::LayerDataParser(
     shared_ptr<Dictionary> dict,
-    shared_ptr<Args> args)
-: DataParser(dict, args) {};
+    shared_ptr<Args> args,
+    bool checkEnabled)
+: DataParser(dict, args, checkEnabled) {
+};
 
 bool LayerDataParser::parse(
     string& s,
@@ -91,15 +93,15 @@ bool LayerDataParser::parse(
     }
   }
 
-  bool isValid;
-  if (args_->trainMode == 0) {
-    isValid = (rslt.LHSTokens.size() > 0) && (rslt.RHSFeatures.size() > 0);
-  } else {
-    // need to have at least two examples
-    isValid = rslt.RHSFeatures.size() > 1;
-  }
+  return check(rslt);
+}
 
-  return isValid;
+bool LayerDataParser::checkImpl(const ParseResults& rslt) {
+  if (args_->trainMode == 0) {
+    return (rslt.LHSTokens.size() > 0) && (rslt.RHSFeatures.size() > 0);
+  }
+  // need to have at least two examples
+  return rslt.RHSFeatures.size() > 1;
 }
 
 } // namespace starspace

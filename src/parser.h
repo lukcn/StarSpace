@@ -52,7 +52,8 @@ class DataParser {
 public:
   explicit DataParser(
     std::shared_ptr<Dictionary> dict,
-    std::shared_ptr<Args> args);
+    std::shared_ptr<Args> args,
+    bool checkEnabled = true);
 
   virtual bool parse(
       std::string& s,
@@ -86,6 +87,9 @@ public:
 protected:
   std::shared_ptr<Dictionary> dict_;
   std::shared_ptr<Args> args_;
+  bool checkEnabled_;
+
+  virtual bool checkImpl(const ParseResults& rslt);
 };
 
 }
